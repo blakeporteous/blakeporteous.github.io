@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blake Porteous</title>
 <style>
-  body { font-family: "Times New Roman", Times, serif; font-size: 16px; margin: 1em; max-width: 46em; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 16px; margin: 1em; }
+  header { text-align: center; }
+  .wrap { max-width: 46em; margin: 0 3em; }
   h1 { font-size: 2em; margin: .3em 0; }
   h2 { font-size: 1.3em; margin: 1.2em 0 .4em; }
   .row span:last-child::before { content: " \2014 "; }
@@ -20,27 +22,67 @@
 </head>
 <body>
 
+<header>
 <h1>Blake Porteous</h1>
-<p>Auckland, NZ &middot; <a href="mailto:you@example.com">you@example.com</a> &middot;
-<a href="https://github.com/blakeporteous">github.com/blakeporteous</a> &middot; <a href="resume.pdf">PDF</a></p>
+<p><a href="mailto:bcporteous5@gmail.com">bcporteous5@gmail.com</a> | <a href="https://github.com/blakeporteous">github.com/blakeporteous</a> | <a href="Resume.pdf">PDF</a></p>
+</header>
+
+<div class="wrap">
 
 <h2>Education</h2>
-<div class="row"><span><b>University of Auckland</b>, BE (Honours)</span><span>Expected 2029</span></div>
+<div class="row"><b>University of Auckland</b> &ndash; BE (Honours), Engineering<span>Expected 2029</span></div>
 <ul>
-  <li>Young Scholars (MAX199); ENGSCI211</li>
-  <li>University of Canterbury STAR MATHS199 (A+), Dec 2025</li>
-  <li>Completed three university-level maths papers in high school</li>
+  <li>Young Scholars MAX199</li>
+  <li>Completed 3 university-level mathematics papers while in high school</li>
+  <li>Studied topics including cryptography, graph theory, linear algebra, data analysis, and multivariable calculus</li>
+  <li>Currently taking second-year mathematics papers</li>
+</ul>
+<div class="row"><b>University of Canterbury</b> &ndash; STAR MATHS199 (A+)<span>December 2025</span></div>
+<ul>
+  <li>2 first-year engineering maths papers at University of Canterbury</li>
 </ul>
 
+<h2>Skills</h2>
+<p><b>Languages:</b> Python, Swift, C++<br>
+<b>Software:</b> Matlab, Firebase, XCode, PyTorch, Fusion, RStudio</p>
+
 <h2>Projects</h2>
-<p class="note">Click a project to open it.</p>
 
 <details>
-  <summary><b>Handwritten Digit Neural Network</b> (Python, NumPy, PyTorch)</summary>
+  <summary><b>Tasked</b> &ndash; Social Goal Tracking App</summary>
   <div>
     <ul>
-      <li>Built a neural network from scratch in NumPy, then a PyTorch CNN on MNIST</li>
-      <li>97% test accuracy</li>
+      <li>iOS app that assigns users shared tasks and tracks completion</li>
+      <li>Developed a full-stack app using SwiftUI with Firebase Authentication and Firestore</li>
+      <li>Implemented a system where users receive tasks and submit completion progress</li>
+      <li>Designed real-time data syncing to track user activity and consistency</li>
+      <li>Built and iterated on the app based on personal use and testing</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary><b>Retro Space Invaders</b></summary>
+  <div>
+    <ul>
+      <li>Recreated a classic Space Invaders-style game in C++ targeting Windows XP</li>
+      <li>Built core game systems including rendering, input handling, and collision detection</li>
+      <li>Worked with C++ project structure, libraries, and directory management in Visual Studio</li>
+      <li>Focused on replicating retro gameplay mechanics within legacy system limitations</li>
+    </ul>
+    <p>Browser version: arrow keys to move, space to fire, click the game to restart.</p>
+    <canvas id="inv" width="320" height="240" tabindex="0" aria-label="Space Invaders"></canvas>
+  </div>
+</details>
+
+<details>
+  <summary><b>Neural Network</b></summary>
+  <div>
+    <ul>
+      <li>Learnt how NNs work by building one from scratch in NumPy with no ML libraries</li>
+      <li>Wrote the dense layers, ReLU and Softmax activations, and cross-entropy loss myself</li>
+      <li>Moved to PyTorch and trained a convolutional network to recognise handwritten digits (MNIST)</li>
+      <li>Reached 97% accuracy on the 10,000-image test set</li>
     </ul>
     <p>Draw a digit (0-9) below:</p>
     <canvas id="draw" width="280" height="280" tabindex="0" aria-label="Drawing area"></canvas>
@@ -51,45 +93,44 @@
 </details>
 
 <details>
-  <summary><b>Retro Space Invaders</b> (C++, Windows XP target)</summary>
+  <summary><b>Strengthening Democracy</b> &ndash; Youth Engagement Campaign</summary>
   <div>
-    <p>Browser version: arrow keys to move, space to fire, click the game to restart.</p>
-    <canvas id="inv" width="320" height="240" tabindex="0" aria-label="Space Invaders"></canvas>
+    <ul>
+      <li>Developed a youth-focused campaign to increase political engagement</li>
+      <li>Produced a targeted video campaign promoting youth participation in politics</li>
+      <li>Incorporated insights from student leaders and policymakers to refine messaging</li>
+      <li>Presented the campaign within a wider initiative involving senior leaders and public figures</li>
+    </ul>
   </div>
-</details>
-
-<details>
-  <summary><b>Tasked</b> (SwiftUI, Firebase)</summary>
-  <div>
-    <ul><li>iOS social goal-tracking app</li></ul>
-    <p class="note">Add screenshots or a recording here, and a <a href="https://github.com/blakeporteous/tasked">repo link</a>.</p>
-  </div>
-</details>
-
-<details>
-  <summary><b>Strengthening Democracy</b> (youth engagement campaign)</summary>
-  <div><p class="note">Add a short description here.</p></div>
 </details>
 
 <h2>Experience</h2>
-<div class="row"><span><b>Football Coach</b>, Onslow Junior Football Club</span><span>Mar 2022 &ndash; Nov 2025</span></div>
-<div class="row"><span><b>Maths Tutor</b>, Wellington</span><span>Feb &ndash; Nov 2025</span></div>
-<div class="row"><span><b>Volunteer Maths Tutor</b></span><span>Mar &ndash; Nov 2025</span></div>
-
-<h2>Skills</h2>
-<p><b>Languages:</b> Python, Swift, C++<br>
-<b>Tools:</b> PyTorch, Matlab, Firebase, XCode, Fusion, RStudio</p>
-
-<h2>Competitions</h2>
+<div class="row"><b>Football Coach</b>, Onslow Junior Football Club &ndash; Wellington<span>Mar 2022 &ndash; Nov 2025</span></div>
 <ul>
-  <li>Computational Algorithmic Thinking, High Distinction</li>
-  <li>Australian Mathematics Competition, Distinction</li>
-  <li>Mathswell: 1st (2020, 2021), 2nd (2022)</li>
-  <li>1st place, Junior Youth Physics Tournament</li>
+  <li>Led structured football training sessions for children aged 5&ndash;10</li>
+  <li>Organised drills, equipment, and session flow to ensure smooth and efficient practices</li>
+  <li>Maintained high levels of organisation and preparedness to manage group safety and engagement</li>
+</ul>
+<div class="row"><b>Math Tutor</b>, Self-employed &ndash; Wellington<span>Feb 2025 &ndash; Nov 2025</span></div>
+<ul>
+  <li>Provided one-on-one maths tutoring, explaining concepts clearly and step-by-step</li>
+  <li>Adapted teaching style to suit different ability levels and learning needs</li>
+  <li>Built patience and communication skills through regular student support</li>
+</ul>
+<div class="row"><b>Volunteer Math Tutor</b> &ndash; Wellington<span>Mar 2025 &ndash; Nov 2025</span></div>
+<ul>
+  <li>Volunteered in Saturday tutoring sessions helping NCEA Level 2, Level 3, and Scholarship Calculus</li>
+  <li>Assisted with challenging problem-solving questions and exam preparation</li>
 </ul>
 
+<h2>Competitions</h2>
+<p><b>Maths:</b> Computational Algorithmic Thinking &ndash; High Distinction (Aced); Australian Maths Competition &ndash; Distinction; Mathswell &ndash; 1st (2020, 2021), 2nd (2022)<br>
+<b>Physics:</b> 1st Place, Junior Youth Physics Tournament</p>
+
 <h2>Interests</h2>
-<p>Football, tennis, rock climbing, chess, skiing</p>
+<p>Football, Tennis, Rock Climbing, Chess, Skiing</p>
+
+</div>
 
 <script>
 /* ---------- Digit recogniser ---------- */
@@ -133,16 +174,36 @@
     return out;
   }
 
-  // weights.json: {"layers":[{"W":[[...]],"b":[...],"act":"relu"|"sigmoid"|"tanh"|"softmax"}, ...]}, W is out x in
-  function forward(a) {
-    for (const L of model.layers) {
-      let z = L.W.map((row, i) => row.reduce((s, w, j) => s + w * a[j], L.b[i]));
-      if (L.act === 'relu') z = z.map(v => Math.max(0, v));
-      else if (L.act === 'sigmoid') z = z.map(v => 1 / (1 + Math.exp(-v)));
-      else if (L.act === 'tanh') z = z.map(Math.tanh);
-      a = z;
+  // Mirrors the PyTorch CNN: conv5x5(1->10) pool relu, conv5x5(10->20) pool relu, fc 320->50 relu, fc 50->10, softmax
+  // model/weights.json is the model's state_dict as nested lists (see export cell).
+  function conv(x, W, b, ic, H, oc) {
+    const k = 5, O = H - k + 1, o = new Float32Array(oc * O * O);
+    for (let f = 0; f < oc; f++) for (let y = 0; y < O; y++) for (let z = 0; z < O; z++) {
+      let s = b[f];
+      for (let c = 0; c < ic; c++) for (let i = 0; i < k; i++) for (let j = 0; j < k; j++)
+        s += W[f][c][i][j] * x[(c * H + y + i) * H + z + j];
+      o[(f * O + y) * O + z] = s;
     }
-    const mx = Math.max(...a), e = a.map(v => Math.exp(v - mx)), s = e.reduce((p, q) => p + q, 0);
+    return o;
+  }
+  function poolRelu(x, C, H) {
+    const O = H / 2, o = new Float32Array(C * O * O);
+    for (let c = 0; c < C; c++) for (let y = 0; y < O; y++) for (let z = 0; z < O; z++) {
+      const i = (c * H + 2 * y) * H + 2 * z;
+      o[(c * O + y) * O + z] = Math.max(0, x[i], x[i + 1], x[i + H], x[i + H + 1]);
+    }
+    return o;
+  }
+  function dense(x, W, b, relu) {
+    return W.map((row, i) => { const s = row.reduce((t, w, j) => t + w * x[j], b[i]); return relu ? Math.max(0, s) : s; });
+  }
+  function forward(x) {
+    const m = model;
+    let a = poolRelu(conv(x, m['conv1.weight'], m['conv1.bias'], 1, 28, 10), 10, 24);
+    a = poolRelu(conv(a, m['conv2.weight'], m['conv2.bias'], 10, 12, 20), 20, 8);
+    a = dense(a, m['fc1.weight'], m['fc1.bias'], true);
+    const z = dense(a, m['fc2.weight'], m['fc2.bias'], false);
+    const mx = Math.max(...z), e = z.map(v => Math.exp(v - mx)), s = e.reduce((p, q) => p + q, 0);
     return e.map(v => v / s);
   }
 
