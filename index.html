@@ -18,36 +18,54 @@
   .bars div { display: flex; align-items: center; gap: .5em; font-size: .85em; }
   .bars i { display: block; height: .8em; background: #00e; min-width: 1px; }
   .note { color: #555; }
+  .xp { width: 960px; max-width: none; margin: .6em 0; border: 1px solid #000; font-family: Tahoma, Verdana, sans-serif; }
+  .desk { position: relative; height: 570px; overflow: hidden; background: #3a6ea5 url(winxp.png) center / cover no-repeat; }
+  .desk .win { position: absolute; }
+  #cmdwin { left: 40px; top: 40px; z-index: 1; }
+  #gamewin { left: 330px; top: 20px; z-index: 2; }
+  .win { border: 3px solid #0831d9; border-top: 0; border-radius: 8px 8px 0 0; background: #ece9d8; box-shadow: 3px 3px 8px rgba(0,0,0,.5); max-width: 100%; }
+  .win h4 { margin: 0; padding: 4px 8px; display: flex; justify-content: space-between; color: #fff; font: bold 13px Tahoma, sans-serif;
+            background: linear-gradient(#3a8af5, #0a56e0 40%, #0646c8); border-radius: 6px 6px 0 0; text-shadow: 1px 1px #0a2a80; }
+  .win h4 i { font-style: normal; letter-spacing: 5px; }
+  #term { width: 460px; max-width: 100%; height: 300px; box-sizing: border-box; overflow: auto; padding: 4px; background: #000; color: #c0c0c0;
+          font: 13px/1.25 "Lucida Console", Consolas, monospace; white-space: pre-wrap; word-break: break-all; }
+  #term input { background: none; border: 0; outline: 0; color: inherit; font: inherit; width: 14em; }
+  #gamewin canvas { display: block; border: 0; }
+  .bar { display: flex; justify-content: space-between; height: 30px; color: #fff; font: 12px Tahoma, sans-serif; background: linear-gradient(#245edb, #3f8cf3 12%, #245edb 90%); }
+  .bar b { display: flex; align-items: center; padding: 0 18px 0 10px; font-size: 17px; font-style: italic; text-shadow: 1px 1px #124012;
+           background: linear-gradient(#5db95d, #3a923a 50%, #2f7d2f); border-radius: 0 12px 12px 0; }
+  .bar span { display: flex; align-items: center; padding: 0 12px; background: linear-gradient(#1290e8, #0f7fdc); }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
-
+ 
 <header>
 <h1>Blake Porteous</h1>
-<p><a href="mailto:bcporteous5@gmail.com">bcporteous5@gmail.com</a> | <a href="https://github.com/blakeporteous">github.com/blakeporteous</a> | <a href="Resume.pdf">PDF</a></p>
+<p><a href="mailto:bcporteous5@gmail.com">bcporteous5@gmail.com</a> | <a href="https://github.com/blakeporteous">github.com/blakeporteous</a> | <a href="https://leetcode.com/u/blakeporteous/">leetcode.com/u/blakeporteous</a> | <a href="Resume.pdf">PDF</a></p>
 </header>
-
+ 
 <div class="wrap">
-
+ 
 <h2>Education</h2>
 <div class="row"><b>University of Auckland</b> &ndash; BE (Honours), Engineering<span>Expected 2029</span></div>
 <ul>
-  <li>Young Scholars MAX199</li>
+  <li>Young Scholars <a href="https://www.auckland.ac.nz/en/science/about-the-faculty/department-of-mathematics/study-mathematics/max.html">MAX199</a></li>
   <li>Completed 3 university-level mathematics papers while in high school</li>
   <li>Studied topics including cryptography, graph theory, linear algebra, data analysis, and multivariable calculus</li>
   <li>Currently taking second-year mathematics papers</li>
 </ul>
-<div class="row"><b>University of Canterbury</b> &ndash; STAR MATHS199 (A+)<span>December 2025</span></div>
+<div class="row"><b>University of Canterbury</b> &ndash; STAR <a href="https://courseinfo.canterbury.ac.nz/GetCourseDetails.aspx?course=MATH199">MATH199</a> (A+)<span>December 2025</span></div>
 <ul>
   <li>2 first-year engineering maths papers at University of Canterbury</li>
 </ul>
-
+ 
 <h2>Skills</h2>
-<p><b>Languages:</b> Python, Swift, C++<br>
+<p><b>Languages:</b> Python, Swift, <a href="https://github.com/blakeporteous/leetcode">C++</a><br>
 <b>Software:</b> Matlab, Firebase, XCode, PyTorch, Fusion, RStudio</p>
-
+ 
 <h2>Projects</h2>
-
+ 
 <details>
   <summary><b>Tasked</b> &ndash; Social Goal Tracking App</summary>
   <div>
@@ -60,8 +78,8 @@
     </ul>
   </div>
 </details>
-
-<details>
+ 
+<details id="invaders">
   <summary><b>Retro Space Invaders</b></summary>
   <div>
     <ul>
@@ -70,11 +88,19 @@
       <li>Worked with C++ project structure, libraries, and directory management in Visual Studio</li>
       <li>Focused on replicating retro gameplay mechanics within legacy system limitations</li>
     </ul>
-    <p>Browser version: arrow keys to move, space to fire, click the game to restart.</p>
-    <canvas id="inv" width="320" height="240" tabindex="0" aria-label="Space Invaders"></canvas>
+    <p>This is the original C++ (<a href="https://github.com/blakeporteous/space-shooters">source</a>) compiled to WebAssembly, running below. Space starts the game, left/right arrows move, Space fires. Needs a keyboard.</p>
+    <div class="xp">
+      <div class="desk">
+        <div class="win" id="cmdwin"><h4>C:\WINDOWS\system32\cmd.exe <i>_ &#9633; &times;</i></h4>
+          <div id="term"><div id="out"></div><div id="row" hidden><span id="pr"></span><input id="cmd" spellcheck="false" autocomplete="off" aria-label="Command prompt"></div></div></div>
+        <div class="win" id="gamewin" hidden><h4>SDL2 Alien Invasion <i>_ &#9633; &times;</i></h4>
+          <canvas id="canvas" width="320" height="480" tabindex="0" aria-label="Space Invaders game"></canvas></div>
+      </div>
+      <div class="bar"><b>start</b><span id="clock"></span></div>
+    </div>
   </div>
 </details>
-
+ 
 <details>
   <summary><b>Neural Network</b></summary>
   <div>
@@ -91,7 +117,7 @@
     <p class="note" id="status"></p>
   </div>
 </details>
-
+ 
 <details>
   <summary><b>Strengthening Democracy</b> &ndash; Youth Engagement Campaign</summary>
   <div>
@@ -101,11 +127,12 @@
       <li>Incorporated insights from student leaders and policymakers to refine messaging</li>
       <li>Presented the campaign within a wider initiative involving senior leaders and public figures</li>
     </ul>
+    <p><a href="https://www.cullen.nz/strengthening-democracy">Project website: cullen.nz/strengthening-democracy</a></p>
   </div>
 </details>
-
+ 
 <h2>Experience</h2>
-<div class="row"><b>Football Coach</b>, Onslow Junior Football Club &ndash; Wellington<span>Mar 2022 &ndash; Nov 2025</span></div>
+<div class="row"><b>Football Coach</b>, <a href="https://onslow.org.nz/">Onslow Junior Football Club</a> &ndash; Wellington<span>Mar 2022 &ndash; Nov 2025</span></div>
 <ul>
   <li>Led structured football training sessions for children aged 5&ndash;10</li>
   <li>Organised drills, equipment, and session flow to ensure smooth and efficient practices</li>
@@ -119,33 +146,33 @@
 </ul>
 <div class="row"><b>Volunteer Math Tutor</b> &ndash; Wellington<span>Mar 2025 &ndash; Nov 2025</span></div>
 <ul>
-  <li>Volunteered in Saturday tutoring sessions helping NCEA Level 2, Level 3, and Scholarship Calculus</li>
+  <li>Volunteered in <a href="https://www.linkedin.com/posts/cushla-thomson-005b684_saturday-maths-kicked-off-today-for-2025-ugcPost-7296438891069259777-P_ym/">Saturday tutoring sessions</a> helping NCEA Level 2, Level 3, and Scholarship Calculus</li>
   <li>Assisted with challenging problem-solving questions and exam preparation</li>
 </ul>
-
+ 
 <h2>Competitions</h2>
-<p><b>Maths:</b> Computational Algorithmic Thinking &ndash; High Distinction (Aced); Australian Maths Competition &ndash; Distinction; Mathswell &ndash; 1st (2020, 2021), 2nd (2022)<br>
-<b>Physics:</b> 1st Place, Junior Youth Physics Tournament</p>
-
+<p><b>Maths:</b> <a href="https://amt.edu.au/cat">Computational Algorithmic Thinking</a> &ndash; High Distinction (Aced); <a href="https://amt.edu.au/amc">Australian Maths Competition</a> &ndash; Distinction; <a href="https://www.wma.org.nz/mathswell">Mathswell</a> &ndash; 1st (2020, 2021), 2nd (2022)<br>
+<b>Physics:</b> 1st Place, <a href="https://iypt.org.nz/">Junior Youth Physics Tournament</a></p>
+ 
 <h2>Interests</h2>
 <p>Football, Tennis, Rock Climbing, Chess, Skiing</p>
-
+ 
 </div>
-
+ 
 <script>
 /* ---------- Digit recogniser ---------- */
 (() => {
   const cv = document.getElementById('draw'), ctx = cv.getContext('2d');
   const bars = document.getElementById('bars'), status = document.getElementById('status');
   let model = null, drawing = false;
-
+ 
   function clear() {
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 280, 280);
     bars.innerHTML = [...Array(10).keys()].map(i => `<div>${i} <i style="width:0"></i></div>`).join('');
   }
   clear();
   ctx.lineWidth = 20; ctx.lineCap = ctx.lineJoin = 'round'; ctx.strokeStyle = '#fff';
-
+ 
   const pos = e => { const r = cv.getBoundingClientRect();
     return [(e.clientX - r.left) * 280 / r.width, (e.clientY - r.top) * 280 / r.height]; };
   cv.addEventListener('pointerdown', e => { drawing = true; cv.setPointerCapture(e.pointerId);
@@ -153,7 +180,7 @@
   cv.addEventListener('pointermove', e => { if (!drawing) return; const [x, y] = pos(e); ctx.lineTo(x, y); ctx.stroke(); });
   cv.addEventListener('pointerup', () => { drawing = false; predict(); });
   document.getElementById('clear').onclick = clear;
-
+ 
   // Same steps as MNIST: crop, scale longest side to 20px, centre by centre of mass in 28x28
   function preprocess() {
     const d = ctx.getImageData(0, 0, 280, 280).data;
@@ -173,7 +200,7 @@
       if (x >= 0 && x < 28 && y >= 0 && y < 28) out[y * 28 + x] = p[i * 4] / 255; }
     return out;
   }
-
+ 
   // Mirrors the PyTorch CNN: conv5x5(1->10) pool relu, conv5x5(10->20) pool relu, fc 320->50 relu, fc 50->10, softmax
   // model/weights.json is the model's state_dict as nested lists (see export cell).
   function conv(x, W, b, ic, H, oc) {
@@ -206,7 +233,7 @@
     const mx = Math.max(...z), e = z.map(v => Math.exp(v - mx)), s = e.reduce((p, q) => p + q, 0);
     return e.map(v => v / s);
   }
-
+ 
   async function predict() {
     if (!model) {
       try { model = await (await fetch('model/weights.json')).json(); }
@@ -218,44 +245,58 @@
     status.textContent = `Prediction: ${best}`;
   }
 })();
-
-/* ---------- Space Invaders ---------- */
+ 
+/* ---------- Space Invaders: the original C++ (main.cpp) compiled to WebAssembly, run from a fake XP console ---------- */
 (() => {
-  const c = document.getElementById('inv'), x = c.getContext('2d'), det = c.closest('details');
-  const keys = {}; let g, raf = 0;
-  function reset() {
-    g = { p: 150, b: [], a: [], d: 1, cd: 0, state: 'play', score: 0 };
-    for (let i = 0; i < 5; i++) for (let j = 0; j < 8; j++) g.a.push({ x: 30 + j * 30, y: 20 + i * 20 });
+  const $ = id => document.getElementById(id);
+  const det = $('invaders'), term = $('term'), out = $('out'), row = $('row'), cmd = $('cmd'), gw = $('gamewin'), cv = $('canvas');
+  const PROMPT = 'C:\\Documents and Settings\\Blake>', EXE = 'FinalSpaceShooters.exe';
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const NOT_FOUND = n => "'" + n + "' is not recognized as an internal or external command,\noperable program or batch file.\n\n";
+  let running = false, booted = false;
+  $('pr').textContent = PROMPT;
+  $('clock').textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+ 
+  const w = s => { out.append(s); term.scrollTop = term.scrollHeight; };
+  const loadScript = () => window.createGame ? Promise.resolve() : new Promise((ok, no) => {
+    const s = document.createElement('script'); s.src = 'game/game.js'; s.onload = ok; s.onerror = no; document.head.append(s);
+  });
+  function finish() { running = false; gw.hidden = true; row.hidden = false; cmd.focus(); term.scrollTop = term.scrollHeight; }
+ 
+  async function run() {
+    if (running) return;
+    running = true; row.hidden = true;
+    try { await loadScript(); } catch { w(NOT_FOUND(EXE)); return finish(); }
+    gw.hidden = false;
+    createGame({
+      canvas: cv, locateFile: f => 'game/' + f,
+      print: t => w(t + '\n'), printErr: t => w(t + '\n'),
+      onExit: code => { w('\nProcess exited with code ' + code + '.\n\n'); finish(); }
+    }).then(() => cv.focus()).catch(e => { w('Error: ' + e + '\n\n'); finish(); });
   }
-  function step() {
-    if (g.state === 'play') {
-      if (keys.ArrowLeft) g.p = Math.max(10, g.p - 3);
-      if (keys.ArrowRight) g.p = Math.min(310, g.p + 3);
-      if (keys[' '] && g.cd <= 0) { g.b.push({ x: g.p, y: 215 }); g.cd = 20; }
-      g.cd--;
-      const sp = g.d * (0.4 + (40 - g.a.length) / 25);
-      g.a.forEach(a => a.x += sp);
-      if (g.a.some(a => a.x < 10 || a.x > 300)) { g.d *= -1; g.a.forEach(a => a.y += 10); }
-      g.b.forEach(b => b.y -= 5); g.b = g.b.filter(b => b.y > 0);
-      g.b.forEach(b => { const i = g.a.findIndex(a => Math.abs(a.x + 8 - b.x) < 9 && Math.abs(a.y + 5 - b.y) < 8);
-        if (i >= 0) { g.a.splice(i, 1); b.y = -1; g.score += 10; } });
-      if (!g.a.length) g.state = 'You win';
-      else if (g.a.some(a => a.y > 200)) g.state = 'Game over';
+ 
+  async function boot() {
+    booted = true;
+    w('Microsoft Windows XP [Version 5.1.2600]\n(C) Copyright 1985-2001 Microsoft Corp.\n\n' + PROMPT);
+    for (const ch of EXE) {
+      await sleep(70);
+      if (!det.open) { booted = false; out.textContent = ''; return; }
+      w(ch);
     }
-    x.fillStyle = '#000'; x.fillRect(0, 0, 320, 240); x.fillStyle = '#fff';
-    g.a.forEach(a => x.fillRect(a.x, a.y, 16, 10));
-    g.b.forEach(b => x.fillRect(b.x - 1, b.y, 2, 8));
-    x.fillRect(g.p - 10, 220, 20, 8); x.fillRect(g.p - 2, 214, 4, 6);
-    x.font = '12px monospace'; x.fillText('Score ' + g.score, 6, 232);
-    if (g.state !== 'play') { x.font = '20px monospace'; x.fillText(g.state, 110, 120); }
-    raf = requestAnimationFrame(step);
+    w('\n'); run();
   }
-  addEventListener('keydown', e => { if (!det.open) return;
-    if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) { keys[e.key] = true; e.preventDefault(); } });
-  addEventListener('keyup', e => keys[e.key] = false);
-  c.addEventListener('click', () => { reset(); c.focus(); });
-  det.addEventListener('toggle', () => { cancelAnimationFrame(raf); if (det.open) { reset(); step(); } });
-  reset();
+ 
+  cmd.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const v = cmd.value.trim(), l = v.toLowerCase();
+    cmd.value = ''; w(PROMPT + v + '\n');
+    if (l === EXE.toLowerCase() || l === 'finalspaceshooters') run();
+    else if (l === 'cls') out.textContent = '';
+    else if (l === 'help') w('Commands: ' + EXE + ', cls\n\n');
+    else if (v) w(NOT_FOUND(v));
+  });
+  term.addEventListener('click', () => { if (!row.hidden) cmd.focus(); });
+  det.addEventListener('toggle', () => { if (det.open && !booted) boot(); });
 })();
 </script>
 </body>
