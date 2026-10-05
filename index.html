@@ -5,6 +5,206 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blake Porteous</title>
 <style>
+  body { font-family: "Times New Roman", Times, serif; font-size: 16px; margin: 1em; max-width: 46em; }
+  h1 { font-size: 2em; margin: .3em 0; }
+  h2 { font-size: 1.3em; margin: 1.2em 0 .4em; }
+  .row span:last-child::before { content: " \2014 "; }
+  ul { margin: .3em 0 .6em; }
+  summary { cursor: pointer; }
+  details > div { margin: .5em 0 1em 1em; }
+  canvas { border: 1px solid #000; background: #000; touch-action: none; display: block; max-width: 100%; }
+  .bars div { display: flex; align-items: center; gap: .5em; font-size: .85em; }
+  .bars i { display: block; height: .8em; background: #00e; min-width: 1px; }
+  .note { color: #555; }
+</style>
+</head>
+<body>
+
+<h1>Blake Porteous</h1>
+<p>Auckland, NZ &middot; <a href="mailto:you@example.com">you@example.com</a> &middot;
+<a href="https://github.com/blakeporteous">github.com/blakeporteous</a> &middot; <a href="resume.pdf">PDF</a></p>
+
+<h2>Education</h2>
+<div class="row"><span><b>University of Auckland</b>, BE (Honours)</span><span>Expected 2029</span></div>
+<ul>
+  <li>Young Scholars (MAX199); ENGSCI211</li>
+  <li>University of Canterbury STAR MATHS199 (A+), Dec 2025</li>
+  <li>Completed three university-level maths papers in high school</li>
+</ul>
+
+<h2>Projects</h2>
+<p class="note">Click a project to open it.</p>
+
+<details>
+  <summary><b>Handwritten Digit Neural Network</b> (Python, NumPy, PyTorch)</summary>
+  <div>
+    <ul>
+      <li>Built a neural network from scratch in NumPy, then a PyTorch CNN on MNIST</li>
+      <li>97% test accuracy</li>
+    </ul>
+    <p>Draw a digit (0-9) below:</p>
+    <canvas id="draw" width="280" height="280" tabindex="0" aria-label="Drawing area"></canvas>
+    <button id="clear">Clear</button>
+    <div class="bars" id="bars"></div>
+    <p class="note" id="status"></p>
+  </div>
+</details>
+
+<details>
+  <summary><b>Retro Space Invaders</b> (C++, Windows XP target)</summary>
+  <div>
+    <p>Browser version: arrow keys to move, space to fire, click the game to restart.</p>
+    <canvas id="inv" width="320" height="240" tabindex="0" aria-label="Space Invaders"></canvas>
+  </div>
+</details>
+
+<details>
+  <summary><b>Tasked</b> (SwiftUI, Firebase)</summary>
+  <div>
+    <ul><li>iOS social goal-tracking app</li></ul>
+    <p class="note">Add screenshots or a recording here, and a <a href="https://github.com/blakeporteous/tasked">repo link</a>.</p>
+  </div>
+</details>
+
+<details>
+  <summary><b>Strengthening Democracy</b> (youth engagement campaign)</summary>
+  <div><p class="note">Add a short description here.</p></div>
+</details>
+
+<h2>Experience</h2>
+<div class="row"><span><b>Football Coach</b>, Onslow Junior Football Club</span><span>Mar 2022 &ndash; Nov 2025</span></div>
+<div class="row"><span><b>Maths Tutor</b>, Wellington</span><span>Feb &ndash; Nov 2025</span></div>
+<div class="row"><span><b>Volunteer Maths Tutor</b></span><span>Mar &ndash; Nov 2025</span></div>
+
+<h2>Skills</h2>
+<p><b>Languages:</b> Python, Swift, C++<br>
+<b>Tools:</b> PyTorch, Matlab, Firebase, XCode, Fusion, RStudio</p>
+
+<h2>Competitions</h2>
+<ul>
+  <li>Computational Algorithmic Thinking, High Distinction</li>
+  <li>Australian Mathematics Competition, Distinction</li>
+  <li>Mathswell: 1st (2020, 2021), 2nd (2022)</li>
+  <li>1st place, Junior Youth Physics Tournament</li>
+</ul>
+
+<h2>Interests</h2>
+<p>Football, tennis, rock climbing, chess, skiing</p>
+
+<script>
+/* ---------- Digit recogniser ---------- */
+(() => {
+  const cv = document.getElementById('draw'), ctx = cv.getContext('2d');
+  const bars = document.getElementById('bars'), status = document.getElementById('status');
+  let model = null, drawing = false;
+
+  function clear() {
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 280, 280);
+    bars.innerHTML = [...Array(10).keys()].map(i => `<div>${i} <i style="width:0"></i></div>`).join('');
+  }
+  clear();
+  ctx.lineWidth = 20; ctx.lineCap = ctx.lineJoin = 'round'; ctx.strokeStyle = '#fff';
+
+  const pos = e => { const r = cv.getBoundingClientRect();
+    return [(e.clientX - r.left) * 280 / r.width, (e.clientY - r.top) * 280 / r.height]; };
+  cv.addEventListener('pointerdown', e => { drawing = true; cv.setPointerCapture(e.pointerId);
+    ctx.beginPath(); const [x, y] = pos(e); ctx.moveTo(x, y); ctx.lineTo(x + .1, y); ctx.stroke(); });
+  cv.addEventListener('pointermove', e => { if (!drawing) return; const [x, y] = pos(e); ctx.lineTo(x, y); ctx.stroke(); });
+  cv.addEventListener('pointerup', () => { drawing = false; predict(); });
+  document.getElementById('clear').onclick = clear;
+
+  // Same steps as MNIST: crop, scale longest side to 20px, centre by centre of mass in 28x28
+  function preprocess() {
+    const d = ctx.getImageData(0, 0, 280, 280).data;
+    let x0 = 280, y0 = 280, x1 = -1, y1 = -1;
+    for (let y = 0; y < 280; y++) for (let x = 0; x < 280; x++)
+      if (d[(y * 280 + x) * 4] > 20) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    if (x1 < 0) return null;
+    const w = x1 - x0 + 1, h = y1 - y0 + 1, s = 20 / Math.max(w, h);
+    const t = document.createElement('canvas'); t.width = t.height = 28;
+    const tc = t.getContext('2d'); tc.imageSmoothingQuality = 'high';
+    tc.drawImage(cv, x0, y0, w, h, (28 - w * s) / 2, (28 - h * s) / 2, w * s, h * s);
+    const p = tc.getImageData(0, 0, 28, 28).data;
+    let m = 0, cx = 0, cy = 0;
+    for (let i = 0; i < 784; i++) { const v = p[i * 4]; m += v; cx += v * (i % 28); cy += v * Math.floor(i / 28); }
+    const dx = Math.round(14 - cx / m), dy = Math.round(14 - cy / m), out = new Array(784).fill(0);
+    for (let i = 0; i < 784; i++) { const x = (i % 28) + dx, y = Math.floor(i / 28) + dy;
+      if (x >= 0 && x < 28 && y >= 0 && y < 28) out[y * 28 + x] = p[i * 4] / 255; }
+    return out;
+  }
+
+  // weights.json: {"layers":[{"W":[[...]],"b":[...],"act":"relu"|"sigmoid"|"tanh"|"softmax"}, ...]}, W is out x in
+  function forward(a) {
+    for (const L of model.layers) {
+      let z = L.W.map((row, i) => row.reduce((s, w, j) => s + w * a[j], L.b[i]));
+      if (L.act === 'relu') z = z.map(v => Math.max(0, v));
+      else if (L.act === 'sigmoid') z = z.map(v => 1 / (1 + Math.exp(-v)));
+      else if (L.act === 'tanh') z = z.map(Math.tanh);
+      a = z;
+    }
+    const mx = Math.max(...a), e = a.map(v => Math.exp(v - mx)), s = e.reduce((p, q) => p + q, 0);
+    return e.map(v => v / s);
+  }
+
+  async function predict() {
+    if (!model) {
+      try { model = await (await fetch('model/weights.json')).json(); }
+      catch { status.textContent = 'Model not found. Add model/weights.json (and view the site over http, not file://).'; return; }
+    }
+    const x = preprocess(); if (!x) return;
+    const p = forward(x), best = p.indexOf(Math.max(...p));
+    bars.innerHTML = p.map((v, i) => `<div><b>${i}</b> <i style="width:${Math.round(v * 200)}px"></i> ${(v * 100).toFixed(0)}%</div>`).join('');
+    status.textContent = `Prediction: ${best}`;
+  }
+})();
+
+/* ---------- Space Invaders ---------- */
+(() => {
+  const c = document.getElementById('inv'), x = c.getContext('2d'), det = c.closest('details');
+  const keys = {}; let g, raf = 0;
+  function reset() {
+    g = { p: 150, b: [], a: [], d: 1, cd: 0, state: 'play', score: 0 };
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 8; j++) g.a.push({ x: 30 + j * 30, y: 20 + i * 20 });
+  }
+  function step() {
+    if (g.state === 'play') {
+      if (keys.ArrowLeft) g.p = Math.max(10, g.p - 3);
+      if (keys.ArrowRight) g.p = Math.min(310, g.p + 3);
+      if (keys[' '] && g.cd <= 0) { g.b.push({ x: g.p, y: 215 }); g.cd = 20; }
+      g.cd--;
+      const sp = g.d * (0.4 + (40 - g.a.length) / 25);
+      g.a.forEach(a => a.x += sp);
+      if (g.a.some(a => a.x < 10 || a.x > 300)) { g.d *= -1; g.a.forEach(a => a.y += 10); }
+      g.b.forEach(b => b.y -= 5); g.b = g.b.filter(b => b.y > 0);
+      g.b.forEach(b => { const i = g.a.findIndex(a => Math.abs(a.x + 8 - b.x) < 9 && Math.abs(a.y + 5 - b.y) < 8);
+        if (i >= 0) { g.a.splice(i, 1); b.y = -1; g.score += 10; } });
+      if (!g.a.length) g.state = 'You win';
+      else if (g.a.some(a => a.y > 200)) g.state = 'Game over';
+    }
+    x.fillStyle = '#000'; x.fillRect(0, 0, 320, 240); x.fillStyle = '#fff';
+    g.a.forEach(a => x.fillRect(a.x, a.y, 16, 10));
+    g.b.forEach(b => x.fillRect(b.x - 1, b.y, 2, 8));
+    x.fillRect(g.p - 10, 220, 20, 8); x.fillRect(g.p - 2, 214, 4, 6);
+    x.font = '12px monospace'; x.fillText('Score ' + g.score, 6, 232);
+    if (g.state !== 'play') { x.font = '20px monospace'; x.fillText(g.state, 110, 120); }
+    raf = requestAnimationFrame(step);
+  }
+  addEventListener('keydown', e => { if (!det.open) return;
+    if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) { keys[e.key] = true; e.preventDefault(); } });
+  addEventListener('keyup', e => keys[e.key] = false);
+  c.addEventListener('click', () => { reset(); c.focus(); });
+  det.addEventListener('toggle', () => { cancelAnimationFrame(raf); if (det.open) { reset(); step(); } });
+  reset();
+})();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blake Porteous</title>
+<style>
   :root { color-scheme: light dark; --fg:#111; --bg:#fff; --link:#1a2f8a; --mute:#555; }
   @media (prefers-color-scheme: dark) { :root { --fg:#e8e8e8; --bg:#181818; --link:#8ea8ff; --mute:#999; } }
   body { font: 12pt/1.45 "Latin Modern Roman","CMU Serif","Computer Modern Serif","Times New Roman",serif;
